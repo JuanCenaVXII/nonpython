@@ -1,0 +1,79 @@
+let userScore = 0;
+let computerScore = 0;
+let userDice = [0, 0, 0, 0, 0];
+let computerDice = [0, 0, 0, 0, 0];
+let userRolls = 0;
+let computerRolls = 0;
+let gameOver = false;
+
+// Roll dice function
+function rollDice() {
+  if (!gameOver) {
+    // Roll user dice
+    for (let i = 0; i < 5; i++) {
+      if (!document.getElementById(`user-die-${i}`).checked) {
+        userDice[i] = Math.floor(Math.random() * 6) + 1;
+      }
+    }
+    // Roll computer dice
+    for (let i = 0; i < 5; i++) {
+      computerDice[i] = Math.floor(Math.random() * 6) + 1;
+    }
+    // Update rolls
+    userRolls++;
+    computerRolls++;
+    // Update scores
+    let userSum = userDice.reduce((a, b) => a + b, 0);
+    let computerSum = computerDice.reduce((a, b) => a + b, 0);
+    if (userSum > computerSum) {
+      userScore++;
+    } else if (computerSum > userSum) {
+      computerScore++;
+    }
+    // Check for winner
+    if (userScore === 21 || computerScore === 21 || userRolls === 10) {
+      gameOver = true;
+      let winner = "";
+      if (userScore === 21) {
+        winner = "User";
+      } else if (computerScore === 21) {
+        winner = "Computer";
+      } else {
+        winner = "No one";
+      }
+      alert(`${winner} wins!`);
+    }
+    // Update display
+    document.getElementById("user-score").innerHTML = userScore;
+    document.getElementById("computer-score").innerHTML = computerScore;
+    document.getElementById("user-rolls").innerHTML = userRolls;
+    document.getElementById("computer-rolls").innerHTML = computerRolls;
+    for (let i = 0; i < 5; i++) {
+      document.getElementById(`user-die-${i}`).value = userDice[i];
+      document.getElementById(`computer-die-${i}`).value = computerDice[i];
+    }
+  }
+}
+
+// Reset function
+function reset() {
+  userScore = 0;
+  computerScore = 0;
+  userDice = [0, 0, 0, 0, 0];
+  computerDice = [0, 0, 0, 0, 0];
+  userRolls = 0;
+  computerRolls = 0;
+  gameOver = false;
+  document.getElementById("user-score").innerHTML = userScore;
+  document.getElementById("computer-score").innerHTML = computerScore;
+  document.getElementById("user-rolls").innerHTML = userRolls;
+  document.getElementById("computer-rolls").innerHTML = computerRolls;
+  for (let i = 0; i < 5; i++) {
+    document.getElementById(`user-die-${i}`).checked = false;
+    document.getElementById(`computer-die-${i}`).value = "";
+  }
+}
+
+// Add event listeners
+document.getElementById("roll-button").addEventListener("click", rollDice);
+document.getElementById("reset-button").addEventListener("click", reset);
