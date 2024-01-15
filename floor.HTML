@@ -1,81 +1,87 @@
-<script>
-let userScore = 0;
-let computerScore = 0;
-let userDice = [0, 0, 0, 0, 0];
-let computerDice = [0, 0, 0, 0, 0];
-let userRolls = 0;
-let computerRolls = 0;
-let gameOver = false;
+<html>
+  <head>
+    <title>Dice Game</title>
+  </head>
+  <body>
+    <h1>Dice Game</h1>
+    <p>Click the button to roll the dice:</p>
+    <button onclick="rollDice()">Roll Dice</button>
+    <p>User Score: <span id="user-score">0</span></p>
+    <p>Computer Score: <span id="computer-score">0</span></p>
+    <p>User Rolls: <span id="user-rolls">0</span></p>
+    <p>Computer Rolls: <span id="computer-rolls">0</span></p>
+    <h2>User Dice</h2>
+    <form>
+      <input type="checkbox" id="user-die-0" name="user-die-0" value="0">
+      <label for="user-die-0">Die 1</label><br>
+      <input type="checkbox" id="user-die-1" name="user-die-1" value="0">
+      <label for="user-die-1">Die 2</label><br>
+      <input type="checkbox" id="user-die-2" name="user-die-2" value="0">
+      <label for="user-die-2">Die 3</label><br>
+      <input type="checkbox" id="user-die-3" name="user-die-3" value="0">
+      <label for="user-die-3">Die 4</label><br>
+      <input type="checkbox" id="user-die-4" name="user-die-4" value="0">
+      <label for="user-die-4">Die 5</label><br>
+    </form>
+    <p>Computer Dice</p>
+    <form>
+      <input type="text" id="computer-die-0" name="computer-die-0" value="" readonly>
+      <input type="text" id="computer-die-1" name="computer-die-1" value="" readonly>
+      <input type="text" id="computer-die-2" name="computer-die-2" value="" readonly>
+      <input type="text" id="computer-die-3" name="computer-die-3" value="" readonly>
+      <input type="text" id="computer-die-4" name="computer-die-4" value="" readonly>
+    </form>
+    <button onclick="reset()">Reset</button>
+    <script>
+      let userScore = 0;
+      let computerScore = 0;
+      let userDice = [0, 0, 0, 0, 0];
+      let computerDice = [0, 0, 0, 0, 0];
+      let userRolls = 0;
+      let computerRolls = 0;
+      let gameOver = false;
 
-// Roll dice function
-function rollDice() {
-  if (!gameOver) {
-    // Roll user dice
-    for (let i = 0; i < 5; i++) {
-      if (!document.getElementById(`user-die-${i}`).checked) {
-        userDice[i] = Math.floor(Math.random() * 6) + 1;
-      }
-    }
-    // Roll computer dice
-    for (let i = 0; i < 5; i++) {
-      computerDice[i] = Math.floor(Math.random() * 6) + 1;
-    }
-    // Update rolls
-    userRolls++;
-    computerRolls++;
-    // Update scores
-    let userSum = userDice.reduce((a, b) => a + b, 0);
-    let computerSum = computerDice.reduce((a, b) => a + b, 0);
-    if (userSum > computerSum) {
-      userScore++;
-    } else if (computerSum > userSum) {
-      computerScore++;
-    }
-    // Check for winner
-    if (userScore === 21 || computerScore === 21 || userRolls === 10) {
-      gameOver = true;
-      let winner = "";
-      if (userScore === 21) {
-        winner = "User";
-      } else if (computerScore === 21) {
-        winner = "Computer";
-      } else {
-        winner = "No one";
-      }
-      alert(`${winner} wins!`);
-    }
-    // Update display
-    document.getElementById("user-score").innerHTML = userScore;
-    document.getElementById("computer-score").innerHTML = computerScore;
-    document.getElementById("user-rolls").innerHTML = userRolls;
-    document.getElementById("computer-rolls").innerHTML = computerRolls;
-    for (let i = 0; i < 5; i++) {
-      document.getElementById(`user-die-${i}`).value = userDice[i];
-      document.getElementById(`computer-die-${i}`).value = computerDice[i];
-    }
-  }
-}
-
-// Reset function
-function reset() {
-  userScore = 0;
-  computerScore = 0;
-  userDice = [0, 0, 0, 0, 0];
-  computerDice = [0, 0, 0, 0, 0];
-  userRolls = 0;
-  computerRolls = 0;
-  gameOver = false;
-  document.getElementById("user-score").innerHTML = userScore;
-  document.getElementById("computer-score").innerHTML = computerScore;
-  document.getElementById("user-rolls").innerHTML = userRolls;
-  document.getElementById("computer-rolls").innerHTML = computerRolls;
-  for (let i = 0; i < 5; i++) {
-    document.getElementById(`user-die-${i}`).checked = false;
-    document.getElementById(`computer-die-${i}`).value = "";
-  }
-}
-
-// Add event listeners
-document.getElementById("roll-button").addEventListener("click", rollDice);
-document.getElementById("reset-button").addEventListener("click", reset);
-</script>
+      // Roll dice function
+      function rollDice() {
+        if (!gameOver) {
+          // Roll user dice
+          for (let i = 0; i < 5; i++) {
+            if (!document.getElementById(`user-die-${i}`).checked) {
+              userDice[i] = Math.floor(Math.random() * 6) + 1;
+            }
+          }
+          // Roll computer dice
+          for (let i = 0; i < 5; i++) {
+            computerDice[i] = Math.floor(Math.random() * 6) + 1;
+          }
+          // Update rolls
+          userRolls++;
+          computerRolls++;
+          // Update scores
+          let userSum = userDice.reduce((a, b) => a + b, 0);
+          let computerSum = computerDice.reduce((a, b) => a + b, 0);
+          if (userSum > computerSum) {
+            userScore++;
+          } else if (computerSum > userSum) {
+            computerScore++;
+          }
+          // Check for winner
+          if (userScore === 21 || computerScore === 21 || userRolls === 10) {
+            gameOver = true;
+            let winner = "";
+            if (userScore === 21) {
+              winner = "User";
+            } else if (computerScore === 21) {
+              winner = "Computer";
+            } else {
+              winner = "No one";
+            }
+            alert(`${winner} wins!`);
+          }
+          // Update display
+          document.getElementById("user-score").innerHTML = userScore;
+          document.getElementById("computer-score").innerHTML = computerScore;
+          document.getElementById("user-rolls").innerHTML = userRolls;
+		      <body>
+          </script>
+          </html>
