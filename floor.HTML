@@ -91,36 +91,45 @@
         }
     }
     
-    function determineWinner() {
-        var userTotal = userDice.reduce((a, b) => a + b, 0);
-        var computerTotal = computerDice.reduce((a, b) => a + b, 0);
-        var winner = 
-        if (userTotal == 21) { 
-            userScore++;
-            alert("You win!");
-        } else if (computerTotal == 21) {
-            computerScore++;
-            alert("Computer wins!");
-        } else if (userTotal > 21 && computerTotal > 21) {
-            alert("Both players lose!");
-        } else if (userTotal > 21) {
-            computerScore++;
-            alert("Computer wins!");
-        } else if (computerTotal > 21) {
-            userScore++;
-            alert("You win!");
-        } else if (userTotal > computerTotal) {
-            userScore++;
-            alert("You win!");
-        } else if (computerTotal > userTotal) {
-            computerScore++;
-            alert("Computer wins!");
-        } else {
-            alert("It's a tie!");
-        }
-    
-        document.getElementById('result').innerHTML =
-            `User Score: ${userScore} <br> Computer Score: ${computerScore}`;
+  function determineWinner() {
+    var userTotal = userDice.reduce((a, b) => a + b, 0);
+    var computerTotal = computerDice.reduce((a, b) => a + b, 0);
+    var winner = "";
+    if (userTotal == 21) { 
+        userScore++;
+        winner = "User";
+        alert("You win!");
+    } else if (computerTotal == 21) {
+        computerScore++;
+        winner = "Computer";
+        alert("Computer wins!");
+    } else if (userTotal > 21 && computerTotal > 21) {
+        winner = "Nobody";
+        alert("Both players lose!");
+    } else if (userTotal > 21) {
+        computerScore++;
+        winner = "Computer";
+        alert("Computer wins!");
+    } else if (computerTotal > 21) {
+        userScore++;
+        winner = "User";
+        alert("You win!");
+    } else if (userTotal > computerTotal) {
+        userScore++;
+        winner = "User";
+        alert("You win!");
+    } else if (computerTotal > userTotal) {
+        computerScore++;
+        winner = "Computer";
+        alert("Computer wins!");
+    } else {
+        winner = "Nobody";
+        alert("It's a tie!");
+    }
+
+    document.getElementById('result').innerHTML =
+        `User Score: ${userScore} <br> Computer Score: ${computerScore}`;
+    return winner;;
     
         reset();
     }
