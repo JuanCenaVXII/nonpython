@@ -14,13 +14,13 @@
     <form>
       <input type="checkbox" id="user-die-0" name="user-die-0" value="0">
       <label for="user-die-0">Die 1</label><br>
-      <input type="checkbox" id="user-die-1" name="user-die-1" value="0">
+      <input type="checkbox" id="user-die-1" name="user-die-1" value="1">
       <label for="user-die-1">Die 2</label><br>
-      <input type="checkbox" id="user-die-2" name="user-die-2" value="0">
+      <input type="checkbox" id="user-die-2" name="user-die-2" value="2">
       <label for="user-die-2">Die 3</label><br>
-      <input type="checkbox" id="user-die-3" name="user-die-3" value="0">
+      <input type="checkbox" id="user-die-3" name="user-die-3" value="3">
       <label for="user-die-3">Die 4</label><br>
-      <input type="checkbox" id="user-die-4" name="user-die-4" value="0">
+      <input type="checkbox" id="user-die-4" name="user-die-4" value="4">
       <label for="user-die-4">Die 5</label><br>
     </form>
     <p>Computer Dice</p>
@@ -30,6 +30,7 @@
       <input type="text" id="computer-die-2" name="computer-die-2" value="" readonly>
       <input type="text" id="computer-die-3" name="computer-die-3" value="" readonly>
       <input type="text" id="computer-die-4" name="computer-die-4" value="" readonly>
+      
     </form>
     <button onclick="reset()">Reset</button>
     <script>
@@ -43,10 +44,15 @@
 
       // Roll dice function
       function rollDice() {
-        if (!gameOver) {
+  
+        if (userRolls >= 5) {
+            alert("You have reached the maximum number of rolls.");
+            return; 
+        }
           // Roll user dice
+      
           for (let i = 0; i < 5; i++) {
-            if (!document.getElementById(`user-die-${i}`).checked) {
+            if (document.getElementById(`user-die-${i}`).checked) {
               userDice[i] = Math.floor(Math.random() * 6) + 1;
             }
           }
@@ -66,22 +72,73 @@
             computerScore++;
           }
           // Check for winner
-          if (userScore === 21 || computerScore === 21 || userRolls === 10) {
+          if (userScore == 21 || computerScore == 21 || userRolls == 10) {
             gameOver = true;
             let winner = "";
-            if (userScore === 21) {
+            if (userScore == 21) {
               winner = "User";
-            } else if (computerScore === 21) {
+            } else if (computerScore == 21) {
               winner = "Computer";
             } else {
               winner = "No one";
             }
             alert(`${winner} wins!`);
           }
+          function keepDie(dieNumber) {
+        var checkbox = document.getElementById(`userDie${dieNumber}`);
+        if (checkbox.checked) {
+            userDice[dieNumber - 1] = 0;
+        }
+    }
+    
+    function determineWinner() {
+        var userTotal = userDice.reduce((a, b) => a + b, 0);
+        var computerTotal = computerDice.reduce((a, b) => a + b, 0);
+        var winner = 
+        if (userTotal == 21) { 
+            userScore++;
+            alert("You win!");
+        } else if (computerTotal == 21) {
+            computerScore++;
+            alert("Computer wins!");
+        } else if (userTotal > 21 && computerTotal > 21) {
+            alert("Both players lose!");
+        } else if (userTotal > 21) {
+            computerScore++;
+            alert("Computer wins!");
+        } else if (computerTotal > 21) {
+            userScore++;
+            alert("You win!");
+        } else if (userTotal > computerTotal) {
+            userScore++;
+            alert("You win!");
+        } else if (computerTotal > userTotal) {
+            computerScore++;
+            alert("Computer wins!");
+        } else {
+            alert("It's a tie!");
+        }
+    
+        document.getElementById('result').innerHTML =
+            `User Score: ${userScore} <br> Computer Score: ${computerScore}`;
+    
+        reset();
+    }
+}
+    function reset() {
+        rollsCount = 0;
+        userDice = [0, 0, 0, 0, 0];
+        computerDice = [0, 0, 0, 0, 0];
+        document.getElementById('dice').innerHTML
+    }
+  
+          
+        
           // Update display
           document.getElementById("user-score").innerHTML = userScore;
           document.getElementById("computer-score").innerHTML = computerScore;
           document.getElementById("user-rolls").innerHTML = userRolls;
-		      <body>
+		      document.getElementById("user").innerHTML = winner;
           </script>
-          </html>
+          </body> 
+          </html>   
